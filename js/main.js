@@ -101,7 +101,7 @@
       if (!slides.length) return;
       var gap = parseFloat(getComputedStyle(gallery).columnGap || getComputedStyle(gallery).gap) || 16;
       var step = slides[0].getBoundingClientRect().width + gap;
-      gallery.scrollBy({ left: dir * step, behavior: 'smooth' });
+      gallery.scrollBy({ left: dir * step, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }
     next.addEventListener('click', function () { slide(1); });
     prev.addEventListener('click', function () { slide(-1); });
@@ -110,6 +110,67 @@
       if (e.key === 'ArrowRight') { slide(1); e.preventDefault(); }
       if (e.key === 'ArrowLeft') { slide(-1); e.preventDefault(); }
     });
+  }
+
+
+  /* Arraste com mouse; toque usa a rolagem horizontal nativa. */
+  if (gallery) {
+    var dragStart = null;
+    var dragScroll = 0;
+    gallery.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      dragStart = e.clientX;
+      dragScroll = gallery.scrollLeft;
+      gallery.setPointerCapture(e.pointerId);
+      gallery.classList.add('is-dragging');
+    });
+    gallery.addEventListener('pointermove', function (e) {
+      if (dragStart === null) return;
+      gallery.scrollLeft = dragScroll - (e.clientX - dragStart);
+    });
+    function endGalleryDrag() {
+      dragStart = null;
+      gallery.classList.remove('is-dragging');
+    }
+    gallery.addEventListener('pointerup', endGalleryDrag);
+    gallery.addEventListener('pointercancel', endGalleryDrag);
+    gallery.addEventListener('lostpointercapture', endGalleryDrag);
+  }
+  /* Duplique apenas a apresentação para um ciclo contínuo sem salto. */
+  document.querySelectorAll('.depo-track').forEach(function (track) {
+    if (track.children.length !== 1) return;
+    var copy = track.firstElementChild.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    copy.setAttribute('inert', '');
+    track.appendChild(copy);
+  });
+
+
+  /* Alinhe as ofertas sem remover a ampliação original do plano em destaque. */
+  var offerGrid = document.querySelector('.planos-grid');
+  if (offerGrid) {
+    function alignOffers() {
+      var reference = offerGrid.querySelector('.plano:not(.plano--featured)');
+      var featured = offerGrid.querySelector('.plano--featured');
+      if (!reference || !featured) return;
+      var price = featured.querySelector('.plano-price');
+      var button = price.nextElementSibling;
+      price.style.top = '';
+      button.style.top = '';
+      if (!window.matchMedia('(min-width: 1081px)').matches) return;
+      var scale = featured.getBoundingClientRect().height / featured.offsetHeight;
+      var referencePrice = reference.querySelector('.plano-price');
+      price.style.top = (referencePrice.getBoundingClientRect().top - price.getBoundingClientRect().top) / scale + 'px';
+      button.style.top = (referencePrice.nextElementSibling.getBoundingClientRect().top - button.getBoundingClientRect().top) / scale + 'px';
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(alignOffers).observe(offerGrid);
+    window.addEventListener('resize', alignOffers);
+    window.addEventListener('load', alignOffers);
+    if (document.fonts) document.fonts.ready.then(alignOffers);
+    offerGrid.addEventListener('transitionend', function (e) {
+      if (e.propertyName === 'opacity') alignOffers();
+    });
+    alignOffers();
   }
 
   /* ---------- FAQ single-open (desktop convenience) ---------- */

@@ -1243,3 +1243,162 @@ a:focus-visible, summary:focus-visible, .eco-slide:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .wa-float-ring { animation: none; }
 }
+
+/* Carrosséis, hierarquia dos valores e assinatura da agência. */
+.eco-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 24px; padding: 18px 24px; max-width: 1180px; margin: 0 auto; cursor: grab; }
+.eco-gallery::-webkit-scrollbar { display: none; }
+.eco-slide { flex: 0 0 clamp(180px, 27vw, 280px); width: auto; scroll-snap-align: start; }
+.eco-controls { display: flex; }
+.eco-gallery.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.eco-gallery img { -webkit-user-drag: none; user-select: none; }
+.depo-marquee { margin-top: clamp(40px, 6vw, 72px); overflow: hidden; mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent); }
+.depo-track { display: flex; width: max-content; animation: depo-marquee 100s linear infinite; }
+.depo-group { display: flex; gap: 24px; padding: 12px 24px 20px 0; align-items: stretch; }
+.depo-group .depo-card { flex: 0 0 auto; width: clamp(280px, 32vw, 380px); }
+.depo-group .depo-card--featured { width: clamp(300px, 42vw, 500px); background: var(--teal-soft); border: 2px solid var(--teal); box-shadow: 0 12px 32px -20px var(--teal-deep); }
+.depo-marquee:hover .depo-track, .depo-marquee:focus-within .depo-track { animation-play-state: paused; }
+@keyframes depo-marquee { to { transform: translateX(-50%); } }
+.plano-price .plano-parc { font-family: var(--font-d); font-size: clamp(30px, 3vw, 40px); line-height: 1.2; font-weight: 400; color: var(--teal-deep); margin: 0 0 10px; }
+.plano-price .plano-parc strong { font-weight: inherit; color: inherit; }
+.plano-price .plano-por { font-size: 15px; margin: 0 0 12px; }
+.plano-price .plano-por strong { font-family: var(--font-b); font-size: 20px; font-weight: 600; }
+.plano-price .plano-de { font-size: 14px; }
+.plano--featured .plano-price .plano-parc { color: #fff; }
+.footer-credit { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 28px 20px 0; color: #fff; font-size: 13px; }
+.footer-credit-logo { position: relative; display: block; width: 180px; height: 40px; overflow: hidden; flex: 0 0 180px; }
+.footer-credit-logo img { position: absolute; width: 251.64px; height: 251.64px; max-width: none; left: -35.92px; top: -110px; filter: brightness(0) invert(1); }
+@media (prefers-reduced-motion: reduce) {
+ .depo-marquee { overflow-x: auto; }
+ .depo-track { animation: none; }
+ .depo-group[aria-hidden="true"] { display: none; }
+}
+
+@media (max-width: 600px) { .footer-credit { padding-bottom: 80px; } }
+
+/* Sistema tipográfico da oferta: condição, moeda e valor em uma mesma linha de base. */
+.plano-price {
+  container-type: inline-size;
+  padding: 25px 0 0;
+  margin: auto 0 18px;
+  border-top: 1px solid rgba(10, 46, 39, .14);
+  color: var(--teal-ink);
+}
+.plano-price .plano-parc {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  color: var(--teal-ink);
+  font-family: var(--font-b);
+  font-size: inherit;
+  line-height: 1;
+  white-space: nowrap;
+}
+.plano-price .price-terms {
+  display: inline-flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .01em;
+  color: #52665e;
+}
+.plano-price .price-terms small { font-size: 12px; font-weight: 400; }
+.plano-price .price-installment {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-weight: 600;
+  color: inherit;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.plano-price .price-currency { font-size: 18px; font-weight: 500; letter-spacing: -.03em; }
+.plano-price .price-number { font-family: "Preparamente Price", Impact, sans-serif; font-weight: 400; font-size: clamp(48px, 22cqi, 68px); letter-spacing: -.015em; line-height: 1.06; }
+.plano-price .price-cents { font-size: .64em; letter-spacing: -.01em; }
+.plano-price .plano-por {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin: 12px 0 0;
+  color: #52665e;
+  font-family: var(--font-b);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.plano-price .plano-por strong { font-family: inherit; font-size: 17px; font-weight: 600; letter-spacing: -.025em; color: var(--teal-ink); }
+.plano-price .plano-de {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #64716b;
+}
+.plano-price .plano-de s { color: inherit; font-weight: 500; text-decoration-thickness: 1px; text-decoration-color: currentColor; }
+.plano--featured .plano-price { border-color: rgba(255,255,255,.3); }
+.plano--featured .plano-price .plano-parc,
+.plano--featured .plano-price .price-installment,
+.plano--featured .plano-price .plano-por strong { color: #fff; }
+.plano--featured .plano-price .price-terms,
+.plano--featured .plano-price .plano-por,
+.plano--featured .plano-price .plano-de,
+.plano--featured .plano-price .plano-de s { color: #e0f5ef; }
+.plano-price + .btn { min-height: 64px; margin-top: 0; }
+@media (max-width: 1080px) {
+  .plano-price { padding-top: 24px; }
+  .plano-price .price-number { font-size: clamp(48px, 22cqi, 68px); }
+}
+
+.plano-price, .plano-price + .btn { position: relative; }
+
+/* Navegação do ecossistema — controles permanentes no canto inferior direito. */
+.eco-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+.eco-btn {
+  width: 64px;
+  height: 54px;
+  flex: 0 0 64px;
+  border-radius: 14px;
+  border: 1px solid #174c42;
+  background: linear-gradient(145deg, #16473e, #0a2e27);
+  color: #c9f5e9;
+  box-shadow: 0 5px 12px -7px rgba(10,46,39,.5), inset 0 1px 0 rgba(255,255,255,.12);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.eco-btn:last-child {
+  background: linear-gradient(145deg, #028a76, #076455);
+  border-color: #087665;
+  color: #fff;
+}
+.eco-btn svg { width: 25px; height: 25px; stroke-width: 2.2; transition: transform .2s ease; }
+@media (hover: hover) {
+  .eco-btn:hover { background: #174c42; border-color: #028a76; color: #fff; transform: translateY(-2px); box-shadow: 0 9px 18px -9px rgba(10,46,39,.55), inset 0 1px 0 rgba(255,255,255,.15); }
+  .eco-btn:first-child:hover svg { transform: translateX(-2px); }
+  .eco-btn:last-child:hover { background: #027564; }
+  .eco-btn:last-child:hover svg { transform: translateX(2px); }
+}
+.eco-btn:active { transform: translateY(1px) scale(.97); box-shadow: inset 0 2px 5px rgba(0,0,0,.18); }
+.eco-btn:focus-visible { outline: 3px solid var(--teal-deep); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .eco-btn, .eco-btn svg { transition: none; }
+}
+
+/* Fonte condensada original, aplicada exclusivamente ao valor das parcelas. */
+@font-face { font-family: "Preparamente Price"; src: url("../assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+.plano-price .plano-parc { gap: 12px; }
+.plano-price .price-terms { font-weight: 700; }
+.plano-price .price-currency { font-weight: 600; font-size: 18px; }
+.plano-price .plano-por { margin-top: 10px; }
+.plano-price .plano-de { margin-top: 12px; }
