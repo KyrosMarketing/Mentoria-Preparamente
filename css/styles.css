@@ -1402,3 +1402,15 @@ a:focus-visible, summary:focus-visible, .eco-slide:focus-visible {
 .plano-price .price-currency { font-weight: 600; font-size: 18px; }
 .plano-price .plano-por { margin-top: 10px; }
 .plano-price .plano-de { margin-top: 12px; }
+
+/* Depoimentos mobile: altura natural por conteúdo, sem esticar os cards curtos. */
+@media (max-width: 600px) {
+  .depo-group { align-items: flex-start; gap: 16px; padding-right: 16px; }
+  .depo-group .depo-card,
+  .depo-group .depo-card--featured { width: min(86vw, 360px); padding: 20px 20px 18px; }
+  .depo-group .depo-stars { font-size: 16px; letter-spacing: 3px; margin-bottom: 10px; }
+  .depo-group .depo-card blockquote { flex: none; font-size: 14px; line-height: 1.55; }
+  .depo-group .depo-author { margin-top: 14px; padding-top: 12px; }
+  .depo-group .depo-author strong { font-size: 14px; line-height: 1.4; }
+  .depo-group .depo-author span { display: block; margin-top: 3px; font-size: 12px; line-height: 1.45; }
+}
